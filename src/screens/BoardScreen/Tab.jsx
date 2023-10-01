@@ -4,13 +4,13 @@ import AddIcon from '@mui/icons-material/AddCircle';
 
 
 
-const Tab = () => {
+const Tab = ({name, addTask}) => {
   return (
     <Grid item xs={4}>
                 <Stack p={3} bgcolor='#000'>
                     <Stack direction='row' justifyContent='space-between' alignItems='center'>
-                        <Typography fontWeight={400} variant='h6'>TODOs</Typography>
-                        <IconButton><AddIcon/></IconButton>
+                        <Typography fontWeight={400} variant='h6'>{name}</Typography>
+                        <IconButton onClick={addTask}><AddIcon/></IconButton>
                     </Stack>
                     <Stack></Stack>
                 </Stack>

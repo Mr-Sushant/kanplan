@@ -14,7 +14,7 @@ const store = set => ({
         boards, areBoardsFetched: true
     }, false, "setBoards"),
 
-    addBoard: board => set(old => ({boards: [board,...old.boards]})),
+    addBoard: board => set(old => ({boards: [board,...old.boards]}), false, "createBoard"),
 
     setLoginStatus: (status) => set({
         isLoggedIn: status,

@@ -11,12 +11,12 @@ const useApp = () => {
 
     const createBoard = async ({boardName, boardColor}) => {
         try{
-            await addDoc(collRef,{
+            const doc = await addDoc(collRef,{
                 name:boardName,
                 color:boardColor,
                 createdAt: serverTimestamp()
             });
-            addBoard({name: boardName, color:boardColor, createdAt: new Date().toLocaleDateString()});
+            addBoard({name: boardName, color:boardColor, createdAt: new Date().toLocaleDateString(), id: doc.id});
         } catch(err){
             console.log(err);
             throw err;

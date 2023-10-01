@@ -2,9 +2,10 @@ import React from 'react'
 import { Grid, Typography, IconButton, Stack, Box } from '@mui/material';
 import OpenIcon from '@mui/icons-material/Launch';
 import { colors } from '../../theme';
+import { useNavigate } from 'react-router-dom';
 
-
-const BoardCard = ({name, color, createdAt}) => {
+const BoardCard = ({name, color, createdAt, id}) => {
+  const navigate = useNavigate();
   return (
     <Grid item xs={3}>
                 <Stack p={2} bgcolor="background.paper" borderLeft="5px solid" borderColor={colors[color]}>
@@ -12,7 +13,7 @@ const BoardCard = ({name, color, createdAt}) => {
                         <Box width='50%'>
                         <Typography textOverflow='ellipsis' overflow='hidden' whiteSpace='nowrap' fontWeight={400} variant='h6'>{name}</Typography>
                         </Box>
-                        <IconButton size='small'><OpenIcon/></IconButton>
+                        <IconButton onClick={() => navigate(`/boards/${id}`)} size='small'><OpenIcon/></IconButton>
                     </Stack>
                     <Typography variant='caption'>Created at: {createdAt}</Typography>
                 </Stack>
