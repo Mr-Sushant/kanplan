@@ -15,6 +15,24 @@ const theme = createTheme({
             main: '#BEA4FF'
         }
     },
+    components: {
+        MuiSnackbar: { 
+            defaultProps: {
+                anchorOrigin: {
+                    vertical: "top",
+                    horizontal: "center"
+                }
+            },
+        },
+        MuiSnackbarContent: {
+            styleOverrides:{
+                message:{
+                    fontWeight: 'bold',
+                    textTransform: 'capitalize',
+                }
+            },
+        },
+    },
     typography: {
         fontFamily: 'Lato, sans-serif',
         button:{

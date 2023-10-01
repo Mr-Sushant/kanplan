@@ -10,11 +10,14 @@ import AppLoader from './components/layout/AppLoader';
 import PublicOnlyRoute from './components/utils/PublicOnlyRoute';
 import BoardsScreen from './screens/BoardsScreen';
 import PrivateOnlyRoute from './components/utils/PrivateOnlyRoute';
+import SnackbarManager from './components/layout/SnackbarManager';
+import BoardScreen from './screens/BoardScreen';
+
+
 
 const App = () => {
   const {loader, setLoginStatus} = useStore();
 
-  console.log(loader);
   useEffect(() => {
     const unsub = onAuthStateChanged(auth, user => {
       setLoginStatus(!!user);
@@ -26,11 +29,12 @@ const App = () => {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-
+      <SnackbarManager/>
       <BrowserRouter>
         <Routes>
           <Route path='/' element={<PublicOnlyRoute Component={AuthScreen}/>} />
           <Route path='/boards' element={<PrivateOnlyRoute Component={BoardsScreen}/>} />
+          <Route path='/boards/:boardId' element={<PrivateOnlyRoute Component={BoardScreen}/>} />
         </Routes>
       </BrowserRouter>
 

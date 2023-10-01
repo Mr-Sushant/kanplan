@@ -4,6 +4,8 @@ import ImageEl from '../../components/utils/ImageEl';
 import { useState } from 'react';
 import { signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../../firebase';
+import useStore from '../../store';
+
 
 const initForm = {
   email: '',
@@ -23,7 +25,8 @@ const AuthScreen = () => {
   const [isLogin, setIsLogin] = useState(true);
   const [form, setForm] = useState(initForm);
   const [loading, setLoading] = useState(false);
-
+  const {setToastr} = useStore();
+  
   const authText = isLogin ? 'Do not have an account ? Click Here.' : 'Already have an account.';
 
   const handleChange = (e) => {
@@ -42,8 +45,8 @@ const AuthScreen = () => {
         await createUserWithEmailAndPassword(auth, form.email, form.password);
       }
     } catch(e){
-      const  msg = e.code.split('auth/')[1].split('-').join(' ')
-      console.log(msg);
+      const  msg = e.code.split('auth/')[1].split('-').join(' ');
+      setToastr(msg);
       setLoading(false);
     }
   };
