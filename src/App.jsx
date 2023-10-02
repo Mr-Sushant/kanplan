@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react'
 import { ThemeProvider, CssBaseline } from '@mui/material';
 import theme from './theme';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import AuthScreen from './screens/AuthScreen';
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from './firebase';
@@ -35,6 +35,7 @@ const App = () => {
           <Route path='/' element={<PublicOnlyRoute Component={AuthScreen}/>} />
           <Route path='/boards' element={<PrivateOnlyRoute Component={BoardsScreen}/>} />
           <Route path='/boards/:boardId' element={<PrivateOnlyRoute Component={BoardScreen}/>} />
+          <Route path='*' element={<Navigate to='/'/>} replace/>
         </Routes>
       </BrowserRouter>
 

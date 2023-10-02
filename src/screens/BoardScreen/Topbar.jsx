@@ -5,8 +5,10 @@ import { signOut } from 'firebase/auth';
 import { auth } from '../../firebase';
 import { useNavigate } from 'react-router-dom';
 import {colors} from '../../theme';
+import {memo} from 'react';
 
-const Topbar = ({name, lastUpdated, color}) => {
+
+const Topbar = ({name, lastUpdated, color, handleDeleteBoard}) => {
     const navigate = useNavigate();
   return (
     <AppBar position='static' sx={{
@@ -20,8 +22,8 @@ const Topbar = ({name, lastUpdated, color}) => {
             </Stack>
 
             <Stack alignItems='center' spacing={2} direction='row'>
-            <Typography variant='body2'>Last Updated at: {lastUpdated}</Typography>
-            <IconButton size='small'><DeleteIcon/></IconButton>
+            <Typography display={{xs:'none', sm:'block'}} variant='body2'>Last Updated at: {lastUpdated}</Typography>
+            <IconButton size='small' onClick={handleDeleteBoard}><DeleteIcon/></IconButton>
             </Stack>
             
         </Toolbar>
@@ -29,4 +31,4 @@ const Topbar = ({name, lastUpdated, color}) => {
   )
 }
 
-export default Topbar
+export default memo(Topbar);

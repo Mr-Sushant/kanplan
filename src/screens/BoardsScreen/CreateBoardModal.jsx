@@ -52,7 +52,7 @@ const CreateBoardModal = ({open, handleClick}) => {
                 
             </Stack>
         </Stack>
-        <Button disabled={creating} onClick={handleCreate} variant='contained' size='large'>Create</Button>
+        <Button disabled={!boardName || creating} onClick={handleCreate} variant='contained' size='large'>Create</Button>
        </Stack>
     </Dialog>
   )

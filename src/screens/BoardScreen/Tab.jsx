@@ -9,7 +9,7 @@ import Droppable from '../../components/utils/StrictModeDroppable';
 const Tab = ({name, tasks, openAddTaskModal, status, removeTask}) => {
   return (
    <Droppable droppableId={status}>
-       {(provided) => <Grid {...provided.droppableProps} ref={provided.innerRef} item xs={4}>
+       {(provided) => <Grid {...provided.droppableProps} ref={provided.innerRef} item  xs={12} sm={4}>
                 <Stack p={3} bgcolor='#000'>
                     <Stack direction='row' justifyContent='space-between' alignItems='center'>
                         <Typography fontWeight={400} variant='h6'>{name}</Typography>

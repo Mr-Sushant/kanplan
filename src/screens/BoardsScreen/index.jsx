@@ -27,15 +27,17 @@ const BoardsScreen = () => {
     <>
         <Topbar handleClick={handleClick}/>
         <CreateBoardModal open = {showBoardModal} handleClick={handleClick}/>
-        {/* <NoBoards /> */}
+        {!boards.length ? <NoBoards />:
+            <Stack px={3} mt={5}>
+            <Grid container spacing={{xs: 2, sm: 4}}>
+                {boards.map((board) => (
+                    <BoardCard key = {board.id} {...board}/>
+                ))}
+            </Grid>
+            </Stack>
+        }
 
-        <Stack px={3} mt={5}>
-        <Grid container spacing={4}>
-            {boards.map((board) => (
-                <BoardCard key = {board.id} {...board}/>
-            ))}
-        </Grid>
-        </Stack>
+        
     </>
   )
 }

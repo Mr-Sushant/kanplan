@@ -1,20 +1,24 @@
-import {collection, addDoc, serverTimestamp, doc, getDoc, getDocs, query, orderBy, updateDoc} from 'firebase/firestore'
+import {collection, addDoc, serverTimestamp, doc, getDoc, getDocs, query, orderBy, updateDoc, deleteDoc} from 'firebase/firestore'
 import {db} from '../firebase'
 import { getAuth } from 'firebase/auth'
 import useStore from '../store';
+import { useNavigate } from 'react-router-dom';
+
+
 
 const useApp = () => {
     const {currentUser: {uid}} = getAuth();
     const collRef = collection(db,`users/${uid}/boards`);
-    const {setBoards, addBoard} =  useStore();
-
+    const {boards, setBoards, addBoard, setToastr} =  useStore();
+    const navigate = useNavigate();
 
     const updateBoard = async (boardId, tabs) => {
         try{
             const docRef = doc(db, `users/${uid}/boardsData/${boardId}`);
             await updateDoc(docRef, {tabs, lastUpdated: serverTimestamp()} );
         } catch(err){
-            console.log(err);
+            setToastr('Error updating board');
+            throw err;
         }
     };
 
@@ -28,22 +32,21 @@ const useApp = () => {
             } else return null;
 
         } catch(err){
-            console.log(err);
+            setToastr('Error frtching board');
+            throw err;
         }
     }
 
     const createBoard = async ({boardName, boardColor}) => {
-        console.log("addition started");
         try{
             const doc = await addDoc(collRef,{
                 name:boardName,
                 color:boardColor,
                 createdAt: serverTimestamp()
             });
-            console.log("addition success");
             addBoard({name: boardName, color:boardColor, createdAt: new Date().toLocaleString('en-US'), id: doc.id});
         } catch(err){
-            console.log(err);
+            setToastr('Error Creating Board.');
             throw err;
         }
     }
@@ -55,14 +58,26 @@ const useApp = () => {
             const boards = fetchQuery.docs.map(doc => ({...doc.data(), id: doc.id, createdAt: doc.data().createdAt.toDate().toLocaleString('en-US')}));
             setBoards(boards);
         } catch(err){
-            console.log(err);
-           
+            setToastr("Error fetching boards.");
         } finally{
             if(setLoading) setLoading(false);
         }
     }
 
-    return { createBoard, fetchBoards, fetchBoard, updateBoard };
+    const deleteBoard = async (boardId) => {
+        try{
+            const docRef = doc(db, `users/${uid}/boards/${boardId}`);
+            await deleteDoc(docRef);
+            const tempBoards = boards.filter(board => board.id !== boardId);
+            setBoards(tempBoards);
+            navigate('/boards');
+        } catch(err){
+            setToastr("Error deleting the board.");
+            throw err;
+        }
+    };
+
+    return { createBoard, fetchBoards, fetchBoard, updateBoard, deleteBoard };
 
 }
 
