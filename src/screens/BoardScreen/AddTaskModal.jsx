@@ -1,9 +1,11 @@
-import React from 'react'
+import {useState} from 'react'
 import { Dialog, Typography, Stack, IconButton, Chip, OutlinedInput, Button } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 
 
-const AddTaskModal = ({tabName, onClose}) => {
+const AddTaskModal = ({tabName, onClose, addTask}) => {
+  const [task, setTask] = useState('');
+
   return (
     <Dialog open fullWidth maxWidth='xs' onClose={onClose}>
         <Stack p={2}>
@@ -16,8 +18,8 @@ const AddTaskModal = ({tabName, onClose}) => {
             <Typography>Status: </Typography>
             <Chip size='small' label={tabName}></Chip>
         </Stack>
-        <OutlinedInput placeholder='Task'/>
-        <Button variant='contained'>Add Task</Button>
+        <OutlinedInput value={task} onChange={(e) => setTask(e.target.value)} placeholder='Task'/>
+        <Button variant='contained' onClick={() => addTask(task)}>Add Task</Button>
         </Stack>
         </Stack>
     </Dialog>

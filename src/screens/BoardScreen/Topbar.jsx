@@ -4,14 +4,14 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import { signOut } from 'firebase/auth';
 import { auth } from '../../firebase';
 import { useNavigate } from 'react-router-dom';
+import {colors} from '../../theme';
 
-
-const Topbar = ({name, createdAt, color}) => {
+const Topbar = ({name, lastUpdated, color}) => {
     const navigate = useNavigate();
   return (
     <AppBar position='static' sx={{
         borderBottom: '5px solid',
-        borderColor: color
+        borderColor: colors[color],
     }}>
         <Toolbar sx={{justifyContent:'space-between'}}>
             <Stack alignItems='center' spacing={1} direction='row'>
@@ -20,7 +20,7 @@ const Topbar = ({name, createdAt, color}) => {
             </Stack>
 
             <Stack alignItems='center' spacing={2} direction='row'>
-            <Typography variant='body2'>Last Updated at: {createdAt}</Typography>
+            <Typography variant='body2'>Last Updated at: {lastUpdated}</Typography>
             <IconButton size='small'><DeleteIcon/></IconButton>
             </Stack>
             

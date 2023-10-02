@@ -13,9 +13,9 @@ exports.createBoardData = onDocumentCreated('users/{uid}/boards/{boardId}', asyn
 
     return await firestore.doc(`users/${uid}/boardsData/${boardId}`).set({
         tabs:{
-            Todos: [],
-            Progress: [],
-            Completed: []
+            todos: [],
+            progress: [],
+            completed: []
         },
         lastUpdated: FieldValue.serverTimestamp(),
     })
