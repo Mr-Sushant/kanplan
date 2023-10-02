@@ -2,7 +2,7 @@ import Topbar from "./Topbar"
 import BoardInterface from "./BoardInterface"
 import { useParams } from "react-router-dom"
 import useStore from '../../store';
-import { useMemo, useEffect, useState } from 'react';
+import { useMemo, useEffect, useState, useCallback } from 'react';
 import { useNavigate } from "react-router-dom";
 import useApp from "../../hooks/useApp";
 import AppLoader from '../../components/layout/AppLoader';
@@ -18,7 +18,7 @@ const BoardScreen = () => {
   const boardData = useMemo(() => data, [data]);
   const {fetchBoard} = useApp();
 
-  console.log(boardData);
+  const handleLastUpdated = useCallback(() => setLastUpdated(new Date().toLocaleString("en-US")),[]);
 
   const handleFetchBoard = async() => {
     try{
@@ -49,7 +49,7 @@ const BoardScreen = () => {
   return (
     <>
         <Topbar {...board} lastUpdated={lastUpdated}/>
-        <BoardInterface boardData={boardData} boardId={boardId}/>
+        <BoardInterface boardData={boardData} boardId={boardId} updateLastUpdated = {handleLastUpdated}/>
     </>
   )
 }

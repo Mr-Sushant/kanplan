@@ -1,18 +1,20 @@
 import { Stack, Typography, IconButton } from "@mui/material";
 import DeleteIcon from '@mui/icons-material/Delete';
+import { Draggable } from "react-beautiful-dnd";
 
-
-const Task = ({text, id}) => {
+const Task = ({text, id, removeTask, index}) => {
   return (
-    <Stack direction='row' alignItems='center' spacing={1}>
+    <Draggable draggableId={id} index={index}>
+      {(provided) => <Stack {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef} direction='row' alignItems='center' spacing={1}>
         <Typography p={1}
         border='1px solid'
         borderColor='#777980'
         bgcolor='#45474E'
         width='100%'
         >{text}</Typography>
-        <IconButton><DeleteIcon/></IconButton>
-    </Stack>
+        <IconButton onClick={removeTask}><DeleteIcon/></IconButton>
+    </Stack>}
+    </Draggable>
   )
 }
 

@@ -1,9 +1,9 @@
-import {useState} from 'react'
+import {useEffect, useRef, useState} from 'react'
 import { Dialog, Typography, Stack, IconButton, Chip, OutlinedInput, Button } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 
 
-const AddTaskModal = ({tabName, onClose, addTask}) => {
+const AddTaskModal = ({tabName, onClose, addTask, loading}) => {
   const [task, setTask] = useState('');
 
   return (
@@ -19,7 +19,7 @@ const AddTaskModal = ({tabName, onClose, addTask}) => {
             <Chip size='small' label={tabName}></Chip>
         </Stack>
         <OutlinedInput value={task} onChange={(e) => setTask(e.target.value)} placeholder='Task'/>
-        <Button variant='contained' onClick={() => addTask(task)}>Add Task</Button>
+        <Button disabled={loading || !task} variant='contained' onClick={() => addTask(task)}>Add Task</Button>
         </Stack>
         </Stack>
     </Dialog>
