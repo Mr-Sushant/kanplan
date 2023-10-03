@@ -17,7 +17,13 @@ Firebase is a go-to backend solution, offering a range of services such as Hosti
 To simplify state management, I have implement Zustand. This library provides an efficient and straightforward approach to handling the application's state, reducing unnecessary complexities.
 
 ## features
-
+![](./screenshots/Auth.png)
+![](./screenshots/noBoards.png)
+![](./screenshots/createBoard.png)
+![](./screenshots/boardCreated.png)
+![](./screenshots/BoardScreen.png)
+![](./screenshots/addTask.png)
+![](./screenshots/BoardScreen-actions.png)
 
 
 ## 🚀 About Me
