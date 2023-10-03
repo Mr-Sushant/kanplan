@@ -17,11 +17,19 @@ const statuses = {
 const BoardInterface = ({boardData, boardId, updateLastUpdated}) => {
   const [loading, setLoading] = useState(false);
   const [addTaskTo, setAddTaskTo] = useState('');
+  const [shiftTask, setShiftTask] = useState(null);
   const [tabs, setTabs] = useState(structuredClone(boardData));
   const {updateBoard} = useApp();
   const {setToastr} = useStore();
 
   const handleOpenAddTaskModal = useCallback((status) => setAddTaskTo(status),[]);
+
+  const handleOpenShiftTaskModal = useCallback(
+    (task) => setShiftTask(task),
+    []
+  );
+
+  console.log({shiftTask})
 
   const handleUpdateBoardData = async (clonedTabs) =>{
     setLoading(true);
@@ -62,6 +70,26 @@ const BoardInterface = ({boardData, boardId, updateLastUpdated}) => {
     [tabs]
   );
 
+  const handleShiftTask = async (newStatus) => {
+    const oldStatus = shiftTask.status;
+    if (newStatus === oldStatus) return setShiftTask(null);
+    const dClone = structuredClone(tabs);
+
+    // remove the el from arr 1
+    const [task] = dClone[oldStatus].splice(shiftTask.index, 1);
+
+    // add it to the arr 2
+    dClone[newStatus].unshift(task);
+
+    try {
+      await handleUpdateBoardData(dClone);
+      setShiftTask(null);
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setLoading(false);
+    }
+  };
 
     const handleDND = async ({destination, source}) => {
       if(!destination) return; // EDGE CASE
@@ -85,12 +113,29 @@ const BoardInterface = ({boardData, boardId, updateLastUpdated}) => {
 
   return (
     <>
-      <ShiftTaskModal statuses={statuses}/>
-        {!!addTaskTo && <AddTaskModal tabName={statuses[addTaskTo]} onClose={() => setAddTaskTo('')} addTask={handleAddTask} loading={loading}/>}
+      {/* {!!shiftTask && <ShiftTaskModal 
+      shiftTask={handleShiftTask}
+      task={shiftTask} 
+      statuses={statuses} 
+      onClose={() => setShiftTask(null)}/>} */}
+
+        {!!addTaskTo && <AddTaskModal 
+        tabName={statuses[addTaskTo]} 
+        onClose={() => setAddTaskTo('')} 
+        addTask={handleAddTask} 
+        loading={loading}/>}
+
+
         <DragDropContext onDragEnd={handleDND}>
         <Grid container px={4} mt={2} spacing={2}>
             {Object.keys(statuses).map(status => (
-              <Tab key={status} status={status} tasks={tabs[status]} name={statuses[status]} removeTask={handleRemoveTask} openAddTaskModal={handleOpenAddTaskModal}/>
+              <Tab key={status}
+              status={status}
+              tasks={tabs[status]}
+              name={statuses[status]}
+              openAddTaskModal={handleOpenAddTaskModal}
+              openShiftTaskModal={handleOpenShiftTaskModal}
+              removeTask={handleRemoveTask}/>
             ))}
         </Grid>
         </DragDropContext>
