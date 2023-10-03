@@ -5,6 +5,7 @@
 # KanPlan - A Kanban Tracker
 
 This website lets you track your progress with the help of a drag and drop Kanban board.
+The website isn't hosted due to the fact that I'm using Firebase cloud functions which requires billing information for production use.
 
 ## Technologies Used
 ### React.js: 
@@ -24,6 +25,8 @@ To simplify state management, I have implement Zustand. This library provides an
 ![](./screenshots/BoardScreen.png)
 ![](./screenshots/addTask.png)
 ![](./screenshots/BoardScreen-actions.png)
+Drag & Drop functionality
+![](./screenshots/gif.gif)
 
 
 ## 🚀 About Me
