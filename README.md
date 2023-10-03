@@ -25,7 +25,6 @@ To simplify state management, I have implement Zustand. This library provides an
 ![](./screenshots/BoardScreen.png)
 ![](./screenshots/addTask.png)
 ![](./screenshots/BoardScreen-actions.png)
-Drag & Drop functionality
 ![](./screenshots/gif.gif)
 
 
